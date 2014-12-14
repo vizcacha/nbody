@@ -1,6 +1,5 @@
 import math
 
-
 class Particle(object):
     """A single particle with unit mass"""
 
@@ -60,7 +59,7 @@ class Particle(object):
     def vz(self, value):
         self._vz = value
 
-    def str(self):
+    def __str__(self):
         return '%f,%f,%f,%f,%f,%f' % (self._x, self._y, self._z, self._vx, self._vy, self._vz)
 
     def pos(self):
@@ -68,6 +67,7 @@ class Particle(object):
 
     def velocity(self):
         return Vector(self._vx, self._vy, self._vz)
+
 
 class Vector(object):
 
@@ -98,5 +98,26 @@ class Vector(object):
         self._z = self._z * factor
         return self
 
-    def str(self):
+    def __str__(self):
         return '%f,%f,%f' % (self._x, self._y, self._z)
+
+def parse_initial_file(filename):
+    """Read in the given file and parse its contents into a Particle list
+
+    throws:
+        IOError - File not readable
+        FileFormatError - File has unexpected format
+
+    """
+
+    fi = open(filename, 'r')
+
+    particles = []
+    for line in fi.readlines():
+        if line.strip():
+            params = map(float, line.strip().split())
+            if len(params) == 6:
+                new_particle = Particle( params[0], params[1], params[2], params[3], params[4], params[5] )
+                particles.append(new_particle)
+
+    return particles
