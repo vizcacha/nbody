@@ -104,6 +104,25 @@ class Vector(object):
     def __str__(self):
         return '%f,%f,%f' % (self._x, self._y, self._z)
 
+class NBodySimulationBase(object):
+    """Base class for an NBodySimulation"""
+
+    def __init__(self, particles, start_time = 0):
+        self.particles = particles
+        self.time = start_time
+
+    def run_simulation():
+        pass
+
+def calculate_force(particle, actor):
+    """Calculate the force between two unit masses"""
+    R = actor.pos() - particle.pos()
+    factor = 1.0 / R.mag() ** 3
+    return R.mult(factor)
+
+def particle_from_vectors(pos, vel):
+    return Particle(pos._x, pos._y, pos._z, vel._x, vel._y, vel._z)
+
 def parse_initial_file(filename):
     """Read in the given file and parse its contents into a Particle list
 
@@ -150,3 +169,9 @@ def calculate_energy(particles):
                 U -= 0.5 / r.mag()
 
     return T + U
+
+def write_particles(particles, writer):
+    for particle in particles:
+        writer.write(particle.str())
+        writer.write('\n')
+    writer.write('<=== End of Timestep ===>\n')
