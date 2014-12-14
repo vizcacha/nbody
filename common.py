@@ -1,4 +1,5 @@
 import math
+import random
 
 class Particle(object):
     """A single particle with unit mass"""
@@ -121,3 +122,15 @@ def parse_initial_file(filename):
                 particles.append(new_particle)
 
     return particles
+
+def generate_initial_state(count):
+    """Generate an initial state for count particles
+
+    Their positions and velocities will all be in the range 0,1
+    """
+    return [ Particle(random.random(),
+                      random.random(),
+                      random.random(),
+                      random.random(),
+                      random.random(),
+                      random.random()) for i in xrange(count) ]
