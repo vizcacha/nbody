@@ -69,6 +69,8 @@ class Particle(object):
     def velocity(self):
         return Vector(self._vx, self._vy, self._vz)
 
+    def kinetic_energy(self):
+        return 0.5 * self.velocity().mag()**2
 
 class Vector(object):
 
@@ -134,3 +136,17 @@ def generate_initial_state(count):
                       random.random(),
                       random.random(),
                       random.random()) for i in xrange(count) ]
+
+def calculate_energy(particles):
+    """Calculate the total energy of a list of particles"""
+    T = 0
+    U = 0
+
+    for particle in particles:
+        T += particle.kinetic_energy()
+        for other_particle in particles:
+            if particle != other_particle:
+                r = particle.pos() - other_particle.pos() 
+                U -= 0.5 / r.mag()
+
+    return T + U
