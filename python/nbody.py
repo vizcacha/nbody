@@ -2,6 +2,9 @@ import sys
 
 import common
 
+def run_simulation():
+    pass
+
 def main(args):
     debug = args.debug
 
@@ -11,6 +14,8 @@ def main(args):
         if debug:
             for particle in initial_state:
                 print particle
+
+        run_simulation()
 
     elif args.N:
         initial_state = common.generate_initial_state(args.N)
