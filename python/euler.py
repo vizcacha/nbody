@@ -10,7 +10,7 @@ class EulerSimulation(NBodySimulationBase):
         super(EulerSimulation, self).__init__(particles, initial_time)
         self.dt = timestep
 
-    def run_simulation(self, endtime = 100):
+    def run_simulation(self, endtime = 100, observer=None):
         while self.time < endtime:
             self.particles = self.take_timestep()
             self.time += self.dt
